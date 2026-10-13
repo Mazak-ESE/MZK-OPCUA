@@ -1,0 +1,22 @@
+{
+  "name": "MachineTool",
+  "file": "nodes/MachineTool.json",
+  "children": [
+    {
+      "name": "Equipment",
+      "file": "nodes/Equipment.json"
+    },
+    {
+      "name": "Identification",
+      "file": "nodes/Identification.json"
+    },
+    {
+      "name": "Monitoring",
+      "file": "nodes/Monitoring.json"
+    },
+    {
+      "name": "Production",
+      "file": "nodes/Production.json"
+    }
+  ]
+}
