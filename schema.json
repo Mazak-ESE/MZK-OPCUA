@@ -1,0 +1,282 @@
+{
+  "schema": {
+    "name": "Mazak OPC-UA Standard",
+    "source": "UMATI_WKZ_Lastenheft",
+    "owner": "ESE",
+    "version": "1.0.0"
+  },
+  "root": {
+    "name": "MachineTool",
+    "nodeClass": "Object",
+    "children": [
+      {
+        "name": "Equipment",
+        "nodeClass": "Object",
+        "children": [
+          {
+            "name": "Tools",
+            "nodeClass": "Object",
+            "children": [
+              {
+                "name": "Tool",
+                "nodeClass": "Object",
+                "repeatable": true,
+                "children": [
+                  {
+                    "name": "ControlIdentifier1",
+                    "nodeClass": "Variable",
+                    "dataType": "DWord"
+                  },
+                  {
+                    "name": "Name",
+                    "nodeClass": "Variable",
+                    "dataType": "String"
+                  },
+                  {
+                    "name": "ControlIdentifierInterpretation",
+                    "nodeClass": "Variable",
+                    "dataType": "Word"
+                  },
+                  {
+                    "name": "Locked",
+                    "nodeClass": "Variable",
+                    "dataType": "Boolean"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Identification",
+        "nodeClass": "Object",
+        "children": [
+          {
+            "name": "ComponentName",
+            "dataType": "String"
+          },
+          {
+            "name": "DeviceClass",
+            "dataType": "String"
+          },
+          {
+            "name": "Location",
+            "dataType": "String"
+          },
+          {
+            "name": "Manufacturer",
+            "dataType": "String"
+          },
+          {
+            "name": "ManufacturerUri",
+            "dataType": "String"
+          },
+          {
+            "name": "Model",
+            "dataType": "String"
+          },
+          {
+            "name": "ProductCode",
+            "dataType": "String"
+          },
+          {
+            "name": "ProductInstanceUri",
+            "dataType": "String"
+          },
+          {
+            "name": "SerialNumber",
+            "dataType": "String"
+          },
+          {
+            "name": "YearOfConstruction",
+            "dataType": "UInt16"
+          },
+          {
+            "name": "SoftwareIdentification",
+            "nodeClass": "Object",
+            "children": [
+              {
+                "name": "HMI",
+                "children": [
+                  {
+                    "name": "Identifier",
+                    "dataType": "String"
+                  },
+                  {
+                    "name": "Manufacturer",
+                    "dataType": "String"
+                  },
+                  {
+                    "name": "SoftwareRevision",
+                    "dataType": "String"
+                  }
+                ]
+              },
+              {
+                "name": "CNC",
+                "children": [
+                  {
+                    "name": "Identifier",
+                    "dataType": "String"
+                  },
+                  {
+                    "name": "Manufacturer",
+                    "dataType": "String"
+                  },
+                  {
+                    "name": "SoftwareRevision",
+                    "dataType": "String"
+                  }
+                ]
+              },
+              {
+                "name": "PLC",
+                "children": [
+                  {
+                    "name": "Identifier",
+                    "dataType": "String"
+                  },
+                  {
+                    "name": "Manufacturer",
+                    "dataType": "String"
+                  },
+                  {
+                    "name": "SoftwareRevision",
+                    "dataType": "String"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Monitoring",
+        "nodeClass": "Object",
+        "children": [
+          {
+            "name": "Channel1",
+            "children": [
+              {
+                "name": "ChannelMode",
+                "dataType": "Long"
+              },
+              {
+                "name": "ChannelState",
+                "dataType": "Long"
+              },
+              {
+                "name": "FeedOverride",
+                "dataType": "Double"
+              },
+              {
+                "name": "Name",
+                "dataType": "String"
+              }
+            ]
+          },
+          {
+            "name": "Machine",
+            "children": [
+              {
+                "name": "OperationMode",
+                "dataType": "Long"
+              },
+              {
+                "name": "PowerOnDuration",
+                "dataType": "DWord"
+              }
+            ]
+          },
+          {
+            "name": "Spindle1",
+            "children": [
+              {
+                "name": "IsRotating",
+                "dataType": "Boolean"
+              },
+              {
+                "name": "IsUsedAsAxis",
+                "dataType": "Boolean"
+              },
+              {
+                "name": "Name",
+                "dataType": "String"
+              },
+              {
+                "name": "Override",
+                "dataType": "Double"
+              }
+            ]
+          },
+          {
+            "name": "Stacklight",
+            "children": [
+              {
+                "name": "StacklightMode",
+                "dataType": "StacklightOperationMode"
+              },
+              {
+                "name": "Lamp1",
+                "children": [
+                  {
+                    "name": "NumberInList",
+                    "dataType": "Long"
+                  },
+                  {
+                    "name": "SignalColor",
+                    "dataType": "Long"
+                  },
+                  {
+                    "name": "SignalMode",
+                    "dataType": "Long"
+                  },
+                  {
+                    "name": "SignalOn",
+                    "dataType": "Boolean"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Production",
+        "children": [
+          {
+            "name": "ActiveProgram",
+            "children": [
+              {
+                "name": "Name",
+                "dataType": "String"
+              },
+              {
+                "name": "NumberInList",
+                "dataType": "Long"
+              },
+              {
+                "name": "State",
+                "children": [
+                  {
+                    "name": "CurrentState",
+                    "dataType": "String"
+                  },
+                  {
+                    "name": "Id",
+                    "dataType": "NodeId"
+                  },
+                  {
+                    "name": "Number",
+                    "dataType": "DWord"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

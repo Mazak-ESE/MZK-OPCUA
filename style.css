@@ -1,0 +1,1 @@
+body{font-family:Arial,sans-serif;margin:20px}.container{display:flex;gap:20px}#treePanel,#detailsPanel{border:1px solid #ccc;padding:10px}#treePanel{width:40%}#detailsPanel{width:60%}ul{list-style:none;padding-left:20px}.node{cursor:pointer}.children{margin-left:16px}
