@@ -1,22 +1,36 @@
-.hidden {
-  display: none;
-}
-
 .toggle {
-  cursor: pointer;
-  color: #0066cc;
-  font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    width: 18px;
+    user-select: none;
+    color: #005a9c;
+    font-weight: bold;
 }
 
 .node {
-  cursor: pointer;
+    cursor: pointer;
 }
 
-.node:hover {
-  color: #0066cc;
+.node:hover,
+.toggle:hover {
+    color: #0078d4;
 }
 
 ul {
-  list-style: none;
-  padding-left: 20px;
+    list-style: none;
+    margin: 0;
+    padding-left: 20px;
+}
+
+li {
+    line-height: 1.6em;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    padding: 4px 8px;
+    vertical-align: top;
 }
