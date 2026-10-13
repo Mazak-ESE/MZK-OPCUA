@@ -1,70 +1,39 @@
+// Load schema
+
 fetch("schema.json")
-  .then(response => response.json())
-  .then(data => {
-    renderNode(data.root, document.getElementById("treePanel"));
-  });
+    .then(response => response.json())
+    .then(data => {
 
-function renderNode(node, parent) {
+        const treeRoot = document.getElementById("treePanel");
 
-  const ul = document.createElement("ul");
-  const li = document.createElement("li");
+        treeRoot.innerHTML = "";
 
-  const label = document.createElement("span");
-  label.className = "node";
-  label.textContent = node.name;
+        const rootList = document.createElement("ul");
 
-  li.appendChild(label);
+        renderNode(data.root, rootList);
 
-  if (node.children && node.children.length > 0) {
-
-    const toggle = document.createElement("span");
-    toggle.textContent = "▶ ";
-    toggle.className = "toggle";
-
-    li.insertBefore(toggle, label);
-
-    const childContainer = document.createElement("div");
-    childContainer.className = "children hidden";
-
-    node.children.forEach(child => {
-      renderNode(child, childContainer);
+        treeRoot.appendChild(rootList);
+    })
+    .catch(error => {
+        console.error("Error loading schema:", error);
     });
 
-    toggle.onclick = () => {
 
-      childContainer.classList.toggle("hidden");
+// Render Tree
 
-      toggle.textContent =
-        childContainer.classList.contains("hidden")
-          ? "▶ "
-          : "▼ ";
-    };
+function renderNode(node, parentElement) {
 
-    li.appendChild(childContainer);
-  }
+    const li = document.createElement("li");
 
-  label.onclick = () => showDetails(node);
+    const toggle = document.createElement("span");
+    toggle.className = "toggle";
 
-  ul.appendChild(li);
-  parent.appendChild(ul);
-}
+    const label = document.createElement("span");
+    label.className = "node";
+    label.textContent = node.name;
 
-function showDetails(node) {
+    label.addEventListener("click", () => {
+        showDetails(node);
+    });
 
-  let html = "";
-
-  Object.keys(node).forEach(key => {
-
-    if (key !== "children") {
-
-      html += `
-        <p>
-          <strong>${key}</strong><br>
-          ${JSON.stringify(node[key])}
-        </p>
-      `;
-    }
-  });
-
-  document.getElementById("details").innerHTML = html;
-}
+    if (node.children && node.children.
