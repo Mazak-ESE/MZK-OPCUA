@@ -1,23 +1,55 @@
-body{font-family:Arial,sans-serif;margin:20px}.container{display:flex;gap:20px}#treePanel,#detailsPanel{border:1px solid #ccc;padding:10px}#treePanel{width:40%}#detailsPanel{width:60%}ul{list-style:none;padding-left:20px}.node{cursor:pointer}.children{margin-left:16px}
-.hidden {
-  display: none;
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
 }
 
-.toggle {
-  cursor: pointer;
-  color: #0066cc;
-  font-weight: bold;
+.container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
 }
 
-.node {
-  cursor: pointer;
+#treePanel,
+#detailsPanel {
+    border: 1px solid #ccc;
+    padding: 10px;
 }
 
-.node:hover {
-  color: #0066cc;
+#treePanel {
+    width: 40%;
+}
+
+#detailsPanel {
+    width: 60%;
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
 }
 
 ul {
-  list-style: none;
-  padding-left: 20px;
+    list-style: none;
+    padding-left: 20px;
 }
+
+.node {
+    cursor: pointer;
+}
+
+.node:hover {
+    color: #0066cc;
+}
+
+.children {
+    margin-left: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+.toggle {
+    cursor: pointer;
+    color: #0066cc;
+    font-weight: bold;
+}
+
