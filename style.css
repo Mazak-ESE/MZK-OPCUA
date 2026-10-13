@@ -13,10 +13,14 @@ body {
 #detailsPanel {
     border: 1px solid #ccc;
     padding: 10px;
+    border-radius: 4px;
 }
 
 #treePanel {
     width: 40%;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.4;
 }
 
 #detailsPanel {
@@ -24,15 +28,19 @@ body {
     position: sticky;
     top: 20px;
     align-self: flex-start;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
 }
 
 ul {
     list-style: none;
     padding-left: 20px;
+    margin: 2px 0;
 }
 
 .node {
     cursor: pointer;
+    font-family: Consolas, "Courier New", monospace;
 }
 
 .node:hover {
@@ -51,5 +59,13 @@ ul {
     cursor: pointer;
     color: #0066cc;
     font-weight: bold;
+    margin-right: 5px;
 }
 
+h1 {
+    margin-top: 0;
+}
+
+h2 {
+    margin-top: 0;
+}
