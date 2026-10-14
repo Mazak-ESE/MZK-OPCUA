@@ -129,6 +129,8 @@ function buildModel(xml) {
 
     }
 
+    generateNodeList();
+
     renderTree(rootNode);
 }
 
@@ -250,46 +252,4 @@ function renderNode(
         li.appendChild(label);
     }
 
-    parentElement.appendChild(li);
-}
-
-function showDetails(node) {
-
-    const details =
-        document.getElementById(
-            "details"
-        );
-
-    details.innerHTML = `
-        <table>
-            <tr>
-                <td><strong>BrowseName</strong></td>
-                <td>${node.browseName}</td>
-            </tr>
-            <tr>
-                <td><strong>DisplayName</strong></td>
-                <td>${node.displayName}</td>
-            </tr>
-            <tr>
-                <td><strong>NodeId</strong></td>
-                <td>${node.nodeId}</td>
-            </tr>
-            <tr>
-                <td><strong>NodeClass</strong></td>
-                <td>${node.nodeClass}</td>
-            </tr>
-            <tr>
-                <td><strong>DataType</strong></td>
-                <td>${node.dataType}</td>
-            </tr>
-            <tr>
-                <td><strong>Description</strong></td>
-                <td>${node.description}</td>
-            </tr>
-            <tr>
-                <td><strong>Children</strong></td>
-                <td>${node.children.length}</td>
-            </tr>
-        </table>
-    `;
-}
+    
