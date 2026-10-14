@@ -1,68 +1,238 @@
-// Load schema
+let nodeMap = {};
+let rootNode = null;
 
-fetch("schema.json")
-    .then(response => response.json())
-    .then(data => {
+// Load XML NodeSet
+fetch("UA_MachineTool.NodeSet2.xml")
+    .then(response => response.text())
+    .then(xmlText => {
 
-        const treePanel = document.getElementById("treePanel");
+        const parser = new DOMParser();
 
-        treePanel.innerHTML = "";
+        const xml =
+            parser.parseFromString(
+                xmlText,
+                "text/xml"
+            );
 
-        const rootList = document.createElement("ul");
+        buildModel(xml);
 
-        renderNode(data.root, rootList);
-
-        treePanel.appendChild(rootList);
     })
     .catch(error => {
-        console.error("Error loading schema:", error);
+        console.error(
+            "Error loading NodeSet:",
+            error
+        );
     });
 
+function buildModel(xml) {
 
-// Render Tree
+    const allNodes = xml.querySelectorAll(
+        "UAObject, UAVariable, UAObjectType, UAVariableType"
+    );
 
-function renderNode(node, parentElement) {
+    allNodes.forEach(node => {
 
-    const li = document.createElement("li");
+        const nodeId =
+            node.getAttribute("NodeId");
 
-    const toggle = document.createElement("span");
+        nodeMap[nodeId] = {
+
+            name:
+                node.getAttribute("BrowseName") || "",
+
+            browseName:
+                node.getAttribute("BrowseName") || "",
+
+            displayName:
+                node.querySelector("DisplayName")
+                    ?.textContent || "",
+
+            description:
+                node.querySelector("Description")
+                    ?.textContent || "",
+
+            nodeId,
+
+            nodeClass:
+                node.tagName,
+
+            dataType:
+                node.getAttribute("DataType") || "",
+
+            children: []
+        };
+    });
+
+    allNodes.forEach(node => {
+
+        const parentId =
+            node.getAttribute("NodeId");
+
+        const references =
+            node.querySelectorAll(
+                "References > Reference"
+            );
+
+        references.forEach(ref => {
+
+            const refType =
+                ref.getAttribute(
+                    "ReferenceType"
+                );
+
+            const isForward =
+                !ref.hasAttribute(
+                    "IsForward"
+                );
+
+            if (
+                isForward &&
+                (
+                    refType ===
+                        "HasComponent" ||
+                    refType ===
+                        "HasProperty"
+                )
+            ) {
+
+                const childId =
+                    ref.textContent.trim();
+
+                if (
+                    nodeMap[parentId] &&
+                    nodeMap[childId]
+                ) {
+
+                    nodeMap[parentId]
+                        .children
+                        .push(
+                            nodeMap[childId]
+                        );
+                }
+            }
+        });
+    });
+
+    rootNode =
+        Object.values(nodeMap).find(
+            n =>
+                n.browseName &&
+                n.browseName.includes(
+                    "MachineToolType"
+                )
+        );
+
+    if (!rootNode) {
+
+        rootNode =
+            Object.values(nodeMap)[0];
+
+    }
+
+    renderTree(rootNode);
+}
+
+function renderTree(root) {
+
+    const treePanel =
+        document.getElementById(
+            "treePanel"
+        );
+
+    treePanel.innerHTML = "";
+
+    const rootList =
+        document.createElement("ul");
+
+    renderNode(root, rootList);
+
+    treePanel.appendChild(rootList);
+}
+
+// Existing tree renderer
+function renderNode(
+    node,
+    parentElement
+) {
+
+    const li =
+        document.createElement("li");
+
+    const toggle =
+        document.createElement("span");
+
     toggle.className = "toggle";
 
-    const label = document.createElement("span");
+    const label =
+        document.createElement("span");
+
     label.className = "node";
 
-    label.addEventListener("click", () => {
-        showDetails(node);
-    });
+    label.addEventListener(
+        "click",
+        () => showDetails(node)
+    );
 
-    if (node.children && node.children.length > 0) {
+    if (
+        node.children &&
+        node.children.length > 0
+    ) {
 
         toggle.textContent = "▶";
 
-        label.innerHTML = "📁 " + node.name;
+        label.innerHTML =
+            "📁 " + node.name;
 
-        const childList = document.createElement("ul");
-        childList.style.display = "none";
+        const childList =
+            document.createElement("ul");
 
-        node.children.forEach(child => {
-            renderNode(child, childList);
-        });
+        childList.style.display =
+            "none";
 
-        toggle.addEventListener("click", () => {
+        node.children.forEach(
+            child => {
 
-            if (childList.style.display === "none") {
+                renderNode(
+                    child,
+                    childList
+                );
 
-                childList.style.display = "block";
-                toggle.textContent = "▼";
-                label.innerHTML = "📂 " + node.name;
-
-            } else {
-
-                childList.style.display = "none";
-                toggle.textContent = "▶";
-                label.innerHTML = "📁 " + node.name;
             }
-        });
+        );
+
+        toggle.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    childList.style.display
+                    === "none"
+                ) {
+
+                    childList.style.display =
+                        "block";
+
+                    toggle.textContent =
+                        "▼";
+
+                    label.innerHTML =
+                        "📂 " +
+                        node.name;
+
+                } else {
+
+                    childList.style.display =
+                        "none";
+
+                    toggle.textContent =
+                        "▶";
+
+                    label.innerHTML =
+                        "📁 " +
+                        node.name;
+                }
+            }
+        );
 
         li.appendChild(toggle);
         li.appendChild(label);
@@ -70,9 +240,11 @@ function renderNode(node, parentElement) {
 
     } else {
 
-        toggle.innerHTML = "&nbsp;&nbsp;";
+        toggle.innerHTML =
+            "&nbsp;&nbsp;";
 
-        label.innerHTML = "📄 " + node.name;
+        label.innerHTML =
+            "📄 " + node.name;
 
         li.appendChild(toggle);
         li.appendChild(label);
@@ -81,104 +253,43 @@ function renderNode(node, parentElement) {
     parentElement.appendChild(li);
 }
 
-
-// Details Panel
-
 function showDetails(node) {
 
-    const details = document.getElementById("details");
+    const details =
+        document.getElementById(
+            "details"
+        );
 
-    let html = "<table>";
-
-    for (const key in node) {
-
-        if (key === "children") {
-            continue;
-        }
-
-        let value = node[key];
-
-        if (typeof value === "object") {
-            value = JSON.stringify(value, null, 2);
-        }
-
-        html += `
+    details.innerHTML = `
+        <table>
             <tr>
-                <td><strong>${key}</strong></td>
-                <td>${value}</td>
+                <td><strong>BrowseName</strong></td>
+                <td>${node.browseName}</td>
             </tr>
-        `;
-    }
-
-    html += "</table>";
-
-    details.innerHTML = html;
-}
-
-
-// Expand All
-
-function expandAll() {
-
-    document
-        .querySelectorAll("#treePanel ul")
-        .forEach(ul => {
-            ul.style.display = "block";
-        });
-
-    document
-        .querySelectorAll(".toggle")
-        .forEach(toggle => {
-
-            if (toggle.textContent.trim() !== "") {
-                toggle.textContent = "▼";
-            }
-        });
-
-    document
-        .querySelectorAll(".node")
-        .forEach(label => {
-
-            if (label.innerHTML.startsWith("📁")) {
-
-                label.innerHTML =
-                    label.innerHTML.replace("📁", "📂");
-            }
-        });
-}
-
-
-// Collapse All
-
-function collapseAll() {
-
-    const allLists =
-        document.querySelectorAll("#treePanel ul");
-
-    allLists.forEach((ul, index) => {
-
-        if (index !== 0) {
-            ul.style.display = "none";
-        }
-    });
-
-    document
-        .querySelectorAll(".toggle")
-        .forEach(toggle => {
-
-            if (toggle.textContent.trim() !== "") {
-                toggle.textContent = "▶";
-            }
-        });
-
-    document
-        .querySelectorAll(".node")
-        .forEach(label => {
-
-            if (label.innerHTML.startsWith("📂")) {
-
-                label.innerHTML =
-                    label.innerHTML.replace("📂", "📁");
-            }
-        });
+            <tr>
+                <td><strong>DisplayName</strong></td>
+                <td>${node.displayName}</td>
+            </tr>
+            <tr>
+                <td><strong>NodeId</strong></td>
+                <td>${node.nodeId}</td>
+            </tr>
+            <tr>
+                <td><strong>NodeClass</strong></td>
+                <td>${node.nodeClass}</td>
+            </tr>
+            <tr>
+                <td><strong>DataType</strong></td>
+                <td>${node.dataType}</td>
+            </tr>
+            <tr>
+                <td><strong>Description</strong></td>
+                <td>${node.description}</td>
+            </tr>
+            <tr>
+                <td><strong>Children</strong></td>
+                <td>${node.children.length}</td>
+            </tr>
+        </table>
+    `;
 }
