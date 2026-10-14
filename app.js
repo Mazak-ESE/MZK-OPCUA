@@ -2,7 +2,7 @@ let nodeMap = {};
 let rootNode = null;
 
 // Load XML NodeSet
-fetch("UA_MachineTool.NodeSet2.xml")
+fetch("UA_MachineTool_NodeSet2.xml")
     .then(response => response.text())
     .then(xmlText => {
 
