@@ -2,6 +2,7 @@ let nodeMap = {};
 let rootNode = null;
 
 // Load XML NodeSet
+
 fetch("UA_MachineTool_NodeSet2.xml")
     .then(response => response.text())
     .then(xmlText => {
@@ -18,17 +19,20 @@ fetch("UA_MachineTool_NodeSet2.xml")
 
     })
     .catch(error => {
+
         console.error(
             "Error loading NodeSet:",
             error
         );
+
     });
 
 function buildModel(xml) {
 
-    const allNodes = xml.querySelectorAll(
-        "UAObject, UAVariable, UAObjectType, UAVariableType"
-    );
+    const allNodes =
+        xml.querySelectorAll(
+            "UAObject, UAVariable, UAObjectType, UAVariableType"
+        );
 
     allNodes.forEach(node => {
 
@@ -38,18 +42,24 @@ function buildModel(xml) {
         nodeMap[nodeId] = {
 
             name:
-                node.getAttribute("BrowseName") || "",
+                node.getAttribute(
+                    "BrowseName"
+                ) || "",
 
             browseName:
-                node.getAttribute("BrowseName") || "",
+                node.getAttribute(
+                    "BrowseName"
+                ) || "",
 
             displayName:
-                node.querySelector("DisplayName")
-                    ?.textContent || "",
+                node.querySelector(
+                    "DisplayName"
+                )?.textContent || "",
 
             description:
-                node.querySelector("Description")
-                    ?.textContent || "",
+                node.querySelector(
+                    "Description"
+                )?.textContent || "",
 
             nodeId,
 
@@ -57,16 +67,22 @@ function buildModel(xml) {
                 node.tagName,
 
             dataType:
-                node.getAttribute("DataType") || "",
+                node.getAttribute(
+                    "DataType"
+                ) || "",
 
             children: []
+
         };
+
     });
 
     allNodes.forEach(node => {
 
         const parentId =
-            node.getAttribute("NodeId");
+            node.getAttribute(
+                "NodeId"
+            );
 
         const references =
             node.querySelectorAll(
@@ -108,9 +124,13 @@ function buildModel(xml) {
                         .push(
                             nodeMap[childId]
                         );
+
                 }
+
             }
+
         });
+
     });
 
     rootNode =
@@ -146,12 +166,18 @@ function renderTree(root) {
     const rootList =
         document.createElement("ul");
 
-    renderNode(root, rootList);
+    renderNode(
+        root,
+        rootList
+    );
 
-    treePanel.appendChild(rootList);
+    treePanel.appendChild(
+        rootList
+    );
 }
 
-// Existing tree renderer
+// Tree Renderer
+
 function renderNode(
     node,
     parentElement
@@ -163,12 +189,14 @@ function renderNode(
     const toggle =
         document.createElement("span");
 
-    toggle.className = "toggle";
+    toggle.className =
+        "toggle";
 
     const label =
         document.createElement("span");
 
-    label.className = "node";
+    label.className =
+        "node";
 
     label.addEventListener(
         "click",
@@ -232,7 +260,9 @@ function renderNode(
                     label.innerHTML =
                         "📁 " +
                         node.name;
+
                 }
+
             }
         );
 
@@ -250,6 +280,84 @@ function renderNode(
 
         li.appendChild(toggle);
         li.appendChild(label);
+
     }
 
-    
+    parentElement.appendChild(li);
+}
+
+function showDetails(node) {
+
+    const details =
+        document.getElementById(
+            "details"
+        );
+
+    details.innerHTML = `
+        <table>
+            <tr>
+                <td><strong>BrowseName</strong></td>
+                <td>${node.browseName}</td>
+            </tr>
+
+            <tr>
+                <td><strong>DisplayName</strong></td>
+                <td>${node.displayName}</td>
+            </tr>
+
+            <tr>
+                <td><strong>NodeId</strong></td>
+                <td>${node.nodeId}</td>
+            </tr>
+
+            <tr>
+                <td><strong>NodeClass</strong></td>
+                <td>${node.nodeClass}</td>
+            </tr>
+
+            <tr>
+                <td><strong>DataType</strong></td>
+                <td>${node.dataType}</td>
+            </tr>
+
+            <tr>
+                <td><strong>Description</strong></td>
+                <td>${node.description}</td>
+            </tr>
+
+            <tr>
+                <td><strong>Children</strong></td>
+                <td>${node.children.length}</td>
+            </tr>
+        </table>
+    `;
+}
+
+// Node Inventory
+
+function generateNodeList() {
+
+    const nodeNames =
+        Object.values(nodeMap)
+            .map(node => node.browseName)
+            .sort();
+
+    const inventory =
+        document.getElementById(
+            "nodeInventory"
+        );
+
+    if (!inventory) {
+        return;
+    }
+
+    inventory.innerHTML =
+        `
+        <p>
+            <strong>Total Nodes:</strong>
+            ${nodeNames.length}
+        </p>
+
+        <pre>${nodeNames.join("\n")}</pre>
+        `;
+}
