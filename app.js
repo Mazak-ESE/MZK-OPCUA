@@ -122,8 +122,8 @@ function buildModel(xml) {
                     nodeMap[childId]
                 ) {
 
-                    nodeMap[childId].category =
-                        nodeMap[parentId].browseName;
+//                    nodeMap[childId].category =
+//                        nodeMap[parentId].browseName;
 
                     nodeMap[parentId]
                         .children
