@@ -335,12 +335,9 @@ function showDetails(node) {
 
 // Node Inventory
 
-function generateNodeList() {
+// Node Inventory
 
-    const nodeNames =
-        Object.values(nodeMap)
-            .map(node => node.browseName)
-            .sort();
+function generateNodeList() {
 
     const inventory =
         document.getElementById(
@@ -351,13 +348,36 @@ function generateNodeList() {
         return;
     }
 
-    inventory.innerHTML =
-        `
+    let html = `
         <p>
             <strong>Total Nodes:</strong>
-            ${nodeNames.length}
+            ${Object.keys(nodeMap).length}
         </p>
 
-        <pre>${nodeNames.join("\n")}</pre>
-        `;
+        <table>
+            <tr>
+                <th>Node</th>
+                <th>Category</th>
+            </tr>
+    `;
+
+    Object.values(nodeMap)
+        .sort((a, b) =>
+            a.browseName.localeCompare(
+                b.browseName
+            )
+        )
+        .forEach(node => {
+
+            html += `
+                <tr>
+                    <td>${node.browseName}</td>
+                    <td>${node.category || ""}</td>
+                </tr>
+            `;
+        });
+
+    html += "</table>";
+
+    inventory.innerHTML = html;
 }
