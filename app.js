@@ -399,3 +399,52 @@ function generateNodeList() {
     inventory.innerHTML = html;
 
 }
+function generateCategoryTree() {
+
+    const tree =
+        document.getElementById(
+            "categoryTree"
+        );
+
+    if (!tree) {
+        return;
+    }
+
+    const categories = {};
+
+    Object.values(nodeMap)
+        .filter(node => node.category)
+        .forEach(node => {
+
+            if (!categories[node.category]) {
+                categories[node.category] = [];
+            }
+
+            categories[node.category].push(
+                node.browseName
+            );
+
+        });
+
+    let html = "";
+
+    Object.keys(categories)
+        .sort()
+        .forEach(category => {
+
+            html += `<h3>${category}</h3><ul>`;
+
+            categories[category]
+                .sort()
+                .forEach(name => {
+
+                    html += `<li>${name}</li>`;
+
+                });
+
+            html += "</ul>";
+
+        });
+
+    tree.innerHTML = html;
+}
