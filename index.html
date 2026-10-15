@@ -13,25 +13,8 @@
 
     <div class="container">
 
-        <div id="treePanel"></div>
-
-        <div id="detailsPanel">
-
-            <h2>Node Details</h2>
-
-            <div id="details">
-                Select a node
-            </div>
-
-            <hr>
-
-            <h2>Node Inventory</h2>
-
-            <div id="nodeInventory">
-                Waiting for XML...
-            </div>
-
-            <hr>
+        <!-- Category Tree (Primary Navigation) -->
+        <div id="categoryTreePanel">
 
             <h2>Category Tree</h2>
 
@@ -41,6 +24,35 @@
 
         </div>
 
+        <!-- Node Details -->
+        <div id="detailsPanel">
+
+            <h2>Node Details</h2>
+
+            <div id="details">
+                Select a node
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <!-- Original OPC-UA Tree -->
+    <h2>OPC-UA Tree</h2>
+
+    <div id="treePanel">
+        Waiting for XML...
+    </div>
+
+    <hr>
+
+    <!-- Node Inventory -->
+    <h2>Node Inventory</h2>
+
+    <div id="nodeInventory">
+        Waiting for XML...
     </div>
 
     <script src="app.js"></script>
