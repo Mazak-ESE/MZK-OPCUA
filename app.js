@@ -71,7 +71,10 @@ function buildModel(xml) {
                     "DataType"
                 ) || "",
 
-            category: "",
+            category:
+                node.querySelector("Category")
+                    ?.textContent || "",
+
 
             children: []
 
