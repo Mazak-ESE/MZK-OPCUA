@@ -402,50 +402,75 @@ function generateNodeList() {
 }
 function generateCategoryTree() {
 
-    const tree =
+    const treeDiv =
         document.getElementById(
             "categoryTree"
         );
 
-    if (!tree) {
+    if (!treeDiv) {
         return;
     }
 
-    const categories = {};
+    const root = {
+        name: "Categories",
+        children: []
+    };
 
     Object.values(nodeMap)
         .filter(node => node.category)
         .forEach(node => {
 
-            if (!categories[node.category]) {
-                categories[node.category] = [];
-            }
+            const parts =
+                node.category.split(" ");
 
-            categories[node.category].push(
-                node.browseName
-            );
+            let current =
+                root;
+
+            parts.forEach(part => {
+
+                let existing =
+                    current.children.find(
+                        c => c.name === part
+                    );
+
+                if (!existing) {
+
+                    existing = {
+                        name: part,
+                        children: []
+                    };
+
+                    current.children.push(
+                        existing
+                    );
+
+                }
+
+                current = existing;
+
+            });
+
+            current.children.push({
+                name: node.browseName,
+                browseName: node.browseName,
+                category: node.category,
+                children: []
+            });
 
         });
 
-    let html = "";
+    treeDiv.innerHTML = "";
 
-    Object.keys(categories)
-        .sort()
-        .forEach(category => {
+    const rootList =
+        document.createElement("ul");
 
-            html += `<h3>${category}</h3><ul>`;
+    renderNode(
+        root,
+        rootList
+    );
 
-            categories[category]
-                .sort()
-                .forEach(name => {
+    treeDiv.appendChild(
+        rootList
+    );
 
-                    html += `<li>${name}</li>`;
-
-                });
-
-            html += "</ul>";
-
-        });
-
-    tree.innerHTML = html;
 }
