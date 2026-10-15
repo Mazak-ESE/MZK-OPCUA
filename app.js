@@ -345,37 +345,64 @@ function generateNodeList() {
         return;
     }
 
-    let html = `
-        <p>
-            <strong>Total Nodes:</strong>
-            ${Object.keys(nodeMap).length}
-        </p>
-
-        <table>
-            <tr>
-                <th>Node</th>
-                <th>Category</th>
-            </tr>
-    `;
-
+const categorised =
     Object.values(nodeMap)
-        .sort((a, b) =>
-            a.browseName.localeCompare(
-                b.browseName
-            )
-        )
-        .forEach(node => {
+        .filter(node => node.category);
 
-            html += `
-                <tr>
-                    <td>${node.browseName}</td>
-                    <td>${node.category || ""}</td>
-                </tr>
-            `;
+const uncategorised =
+    Object.values(nodeMap)
+        .filter(node => !node.category);
 
-        });
+let html = `
+    <p>
+        <strong>Total Nodes:</strong>
+        ${Object.keys(nodeMap).length}
+    </p>
 
-    html += "</table>";
+    <p>
+        <strong>Categorised:</strong>
+        ${categorised.length}
+        &nbsp;&nbsp;
+        <strong>Uncategorised:</strong>
+        ${uncategorised.length}
+    </p>
 
+    <h3>Categorised Nodes</h3>
+
+    <table>
+        <tr>
+            <th>Node</th>
+            <th>Category</th>
+        </tr>
+`;
+
+categorised.forEach(node => {
+
+    html += `
+        <tr>
+            <td>${node.browseName}</td>
+            <td>${node.category}</td>
+        </tr>
+    `;
+});
+
+html += `
+    </table>
+
+    <h3>Uncategorised Nodes</h3>
+
+    <ul>
+`;
+
+uncategorised.forEach(node => {
+
+    html += `
+        <li>${node.browseName}</li>
+    `;
+});
+
+html += `
+    </ul>
+`;
     inventory.innerHTML = html;
 }
