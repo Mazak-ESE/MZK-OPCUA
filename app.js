@@ -71,6 +71,8 @@ function buildModel(xml) {
                     "DataType"
                 ) || "",
 
+            category: "",
+
             children: []
 
         };
@@ -104,10 +106,8 @@ function buildModel(xml) {
             if (
                 isForward &&
                 (
-                    refType ===
-                        "HasComponent" ||
-                    refType ===
-                        "HasProperty"
+                    refType === "HasComponent" ||
+                    refType === "HasProperty"
                 )
             ) {
 
@@ -118,6 +118,9 @@ function buildModel(xml) {
                     nodeMap[parentId] &&
                     nodeMap[childId]
                 ) {
+
+                    nodeMap[childId].category =
+                        nodeMap[parentId].browseName;
 
                     nodeMap[parentId]
                         .children
@@ -176,8 +179,6 @@ function renderTree(root) {
     );
 }
 
-// Tree Renderer
-
 function renderNode(
     node,
     parentElement
@@ -235,31 +236,26 @@ function renderNode(
             () => {
 
                 if (
-                    childList.style.display
-                    === "none"
+                    childList.style.display === "none"
                 ) {
 
                     childList.style.display =
                         "block";
 
-                    toggle.textContent =
-                        "▼";
+                    toggle.textContent = "▼";
 
                     label.innerHTML =
-                        "📂 " +
-                        node.name;
+                        "📂 " + node.name;
 
                 } else {
 
                     childList.style.display =
                         "none";
 
-                    toggle.textContent =
-                        "▶";
+                    toggle.textContent = "▶";
 
                     label.innerHTML =
-                        "📁 " +
-                        node.name;
+                        "📁 " + node.name;
 
                 }
 
@@ -301,6 +297,11 @@ function showDetails(node) {
             </tr>
 
             <tr>
+                <td><strong>Category</strong></td>
+                <td>${node.category || ""}</td>
+            </tr>
+
+            <tr>
                 <td><strong>DisplayName</strong></td>
                 <td>${node.displayName}</td>
             </tr>
@@ -332,10 +333,6 @@ function showDetails(node) {
         </table>
     `;
 }
-
-// Node Inventory
-
-// Node Inventory
 
 function generateNodeList() {
 
@@ -375,6 +372,7 @@ function generateNodeList() {
                     <td>${node.category || ""}</td>
                 </tr>
             `;
+
         });
 
     html += "</table>";
