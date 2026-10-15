@@ -9,11 +9,10 @@ fetch("UA_MachineTool_NodeSet2.xml")
 
         const parser = new DOMParser();
 
-        const xml =
-            parser.parseFromString(
-                xmlText,
-                "text/xml"
-            );
+        const xml = parser.parseFromString(
+            xmlText,
+            "text/xml"
+        );
 
         buildModel(xml);
 
@@ -42,24 +41,22 @@ function buildModel(xml) {
         nodeMap[nodeId] = {
 
             name:
-                node.getAttribute(
-                    "BrowseName"
-                ) || "",
+                node.getAttribute("BrowseName") || "",
 
             browseName:
-                node.getAttribute(
-                    "BrowseName"
-                ) || "",
+                node.getAttribute("BrowseName") || "",
+
+            category:
+                node.querySelector("Category")
+                    ?.textContent || "",
 
             displayName:
-                node.querySelector(
-                    "DisplayName"
-                )?.textContent || "",
+                node.querySelector("DisplayName")
+                    ?.textContent || "",
 
             description:
-                node.querySelector(
-                    "Description"
-                )?.textContent || "",
+                node.querySelector("Description")
+                    ?.textContent || "",
 
             nodeId,
 
@@ -67,14 +64,7 @@ function buildModel(xml) {
                 node.tagName,
 
             dataType:
-                node.getAttribute(
-                    "DataType"
-                ) || "",
-
-            category:
-                node.querySelector("Category")
-                    ?.textContent || "",
-
+                node.getAttribute("DataType") || "",
 
             children: []
 
@@ -85,9 +75,7 @@ function buildModel(xml) {
     allNodes.forEach(node => {
 
         const parentId =
-            node.getAttribute(
-                "NodeId"
-            );
+            node.getAttribute("NodeId");
 
         const references =
             node.querySelectorAll(
@@ -122,9 +110,6 @@ function buildModel(xml) {
                     nodeMap[childId]
                 ) {
 
-//                    nodeMap[childId].category =
-//                        nodeMap[parentId].browseName;
-
                     nodeMap[parentId]
                         .children
                         .push(
@@ -156,8 +141,8 @@ function buildModel(xml) {
     }
 
     generateNodeList();
-
     renderTree(rootNode);
+
 }
 
 function renderTree(root) {
@@ -180,6 +165,7 @@ function renderTree(root) {
     treePanel.appendChild(
         rootList
     );
+
 }
 
 function renderNode(
@@ -193,14 +179,12 @@ function renderNode(
     const toggle =
         document.createElement("span");
 
-    toggle.className =
-        "toggle";
+    toggle.className = "toggle";
 
     const label =
         document.createElement("span");
 
-    label.className =
-        "node";
+    label.className = "node";
 
     label.addEventListener(
         "click",
@@ -283,6 +267,7 @@ function renderNode(
     }
 
     parentElement.appendChild(li);
+
 }
 
 function showDetails(node) {
@@ -301,7 +286,7 @@ function showDetails(node) {
 
             <tr>
                 <td><strong>Category</strong></td>
-                <td>${node.category || ""}</td>
+                <td>${node.category}</td>
             </tr>
 
             <tr>
@@ -335,6 +320,7 @@ function showDetails(node) {
             </tr>
         </table>
     `;
+
 }
 
 function generateNodeList() {
@@ -348,64 +334,68 @@ function generateNodeList() {
         return;
     }
 
-const categorised =
-    Object.values(nodeMap)
-        .filter(node => node.category);
+    const categorised =
+        Object.values(nodeMap)
+            .filter(node => node.category);
 
-const uncategorised =
-    Object.values(nodeMap)
-        .filter(node => !node.category);
+    const uncategorised =
+        Object.values(nodeMap)
+            .filter(node => !node.category);
 
-let html = `
-    <p>
-        <strong>Total Nodes:</strong>
-        ${Object.keys(nodeMap).length}
-    </p>
+    let html = `
+        <p>
+            <strong>Total Nodes:</strong>
+            ${Object.keys(nodeMap).length}
+        </p>
 
-    <p>
-        <strong>Categorised:</strong>
-        ${categorised.length}
-        &nbsp;&nbsp;
-        <strong>Uncategorised:</strong>
-        ${uncategorised.length}
-    </p>
+        <p>
+            <strong>Categorised:</strong>
+            ${categorised.length}
+            &nbsp;&nbsp;
+            <strong>Uncategorised:</strong>
+            ${uncategorised.length}
+        </p>
 
-    <h3>Categorised Nodes</h3>
+        <h3>Categorised Nodes</h3>
 
-    <table>
-        <tr>
-            <th>Node</th>
-            <th>Category</th>
-        </tr>
-`;
+        <table>
+            <tr>
+                <th>Node</th>
+                <th>Category</th>
+            </tr>
+    `;
 
-categorised.forEach(node => {
+    categorised.forEach(node => {
+
+        html += `
+            <tr>
+                <td>${node.browseName}</td>
+                <td>${node.category}</td>
+            </tr>
+        `;
+
+    });
 
     html += `
-        <tr>
-            <td>${node.browseName}</td>
-            <td>${node.category}</td>
-        </tr>
+        </table>
+
+        <h3>Uncategorised Nodes</h3>
+
+        <ul>
     `;
-});
 
-html += `
-    </table>
+    uncategorised.forEach(node => {
 
-    <h3>Uncategorised Nodes</h3>
+        html += `
+            <li>${node.browseName}</li>
+        `;
 
-    <ul>
-`;
-
-uncategorised.forEach(node => {
+    });
 
     html += `
-        <li>${node.browseName}</li>
+        </ul>
     `;
-});
 
-html += `
-    </ul>
-`;
     inventory.innerHTML = html;
+
 }
