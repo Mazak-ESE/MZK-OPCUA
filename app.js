@@ -141,6 +141,7 @@ function buildModel(xml) {
     }
 
     generateNodeList();
+    generateCategoryTree();
     renderTree(rootNode);
 
 }
