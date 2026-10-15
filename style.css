@@ -9,27 +9,63 @@ body {
     align-items: flex-start;
 }
 
-#treePanel,
+#categoryTreePanel,
 #detailsPanel {
     border: 1px solid #ccc;
     padding: 10px;
     border-radius: 4px;
 }
 
-#treePanel {
-    width: 40%;
+#categoryTreePanel {
+    flex: 1;
     font-family: Consolas, "Courier New", monospace;
     font-size: 14px;
     line-height: 1.4;
 }
 
 #detailsPanel {
-    width: 60%;
+    width: 350px;
+    min-width: 350px;
     position: sticky;
     top: 20px;
     align-self: flex-start;
-    max-height: calc(100vh - 40px);
+}
+
+#treePanel {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 4px;
+    font-family: Consolas, "Courier New", monospace;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+#nodeInventory {
+    max-height: 500px;
     overflow-y: auto;
+}
+
+#nodeInventory table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#nodeInventory th,
+#nodeInventory td {
+    border: 1px solid #ccc;
+    padding: 4px 8px;
+    text-align: left;
+    vertical-align: top;
+}
+
+#details table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#details td {
+    padding: 4px 8px;
+    vertical-align: top;
 }
 
 ul {
@@ -68,4 +104,14 @@ h1 {
 
 h2 {
     margin-top: 0;
+}
+
+details {
+    margin-top: 15px;
+}
+
+summary {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.1em;
 }
