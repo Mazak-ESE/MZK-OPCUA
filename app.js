@@ -47,57 +47,64 @@ function buildModel(xml) {
             "UAObject, UAVariable, UAObjectType, UAVariableType"
         );
 
-  allNodes.forEach(node => {
+    // Create node dictionary
 
-    const nodeId =
-        node.getAttribute("NodeId");
+    allNodes.forEach(node => {
 
-    const browseName =
-        node.getAttribute("BrowseName") || "";
+        const nodeId =
+            node.getAttribute("NodeId");
 
-    const cleanName =
-        browseName.includes(":")
-            ? browseName.substring(
-                browseName.indexOf(":") + 1
-              )
-            : browseName;
+        const browseName =
+            node.getAttribute("BrowseName") || "";
 
-    const metadata =
-    cleanName === "ChannelState"
-        ? testMetadata
-        : null;
+        const cleanName =
+            browseName.includes(":")
+                ? browseName.substring(
+                    browseName.indexOf(":") + 1
+                )
+                : browseName;
 
-nodeMap[nodeId] = {
+        const metadata =
+            cleanName === "ChannelState"
+                ? testMetadata
+                : null;
 
-    name: cleanName,
+        nodeMap[nodeId] = {
 
-    browseName: browseName,
+            name: cleanName,
 
-    metadata: metadata,
+            browseName: browseName,
 
-    category:
-        node.querySelector("Category")
-            ?.textContent || "",
+            metadata: metadata,
 
-    displayName:
-        node.querySelector("DisplayName")
-            ?.textContent || "",
+            category:
+                node.querySelector("Category")
+                    ?.textContent || "",
 
-    description:
-        node.querySelector("Description")
-            ?.textContent || "",
+            displayName:
+                node.querySelector("DisplayName")
+                    ?.textContent || "",
 
-    nodeId,
+            description:
+                node.querySelector("Description")
+                    ?.textContent || "",
 
-    nodeClass:
-        node.tagName,
+            nodeId,
 
-    dataType:
-        node.getAttribute("DataType") || "",
+            nodeClass:
+                node.tagName,
 
-    children: []
+            dataType:
+                node.getAttribute("DataType") || "",
 
-};
+            children: []
+
+        };
+
+    });
+
+    // Build relationships
+
     allNodes.forEach(node => {
 
         const parentId =
@@ -150,6 +157,8 @@ nodeMap[nodeId] = {
 
     });
 
+    // Find root node
+
     rootNode =
         Object.values(nodeMap).find(
             n =>
@@ -169,29 +178,6 @@ nodeMap[nodeId] = {
     generateNodeList();
     generateCategoryTree();
     renderTree(rootNode);
-
-}
-
-function renderTree(root) {
-
-    const treePanel =
-        document.getElementById(
-            "treePanel"
-        );
-
-    treePanel.innerHTML = "";
-
-    const rootList =
-        document.createElement("ul");
-
-    renderNode(
-        root,
-        rootList
-    );
-
-    treePanel.appendChild(
-        rootList
-    );
 
 }
 
