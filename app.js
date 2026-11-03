@@ -37,7 +37,7 @@ function buildModel(xml) {
 
         const nodeId =
             node.getAttribute("NodeId");
-
+            console.log(node.getAttribute("BrowseName"));
         nodeMap[nodeId] = {
 
             name:
