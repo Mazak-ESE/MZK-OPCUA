@@ -47,64 +47,57 @@ function buildModel(xml) {
             "UAObject, UAVariable, UAObjectType, UAVariableType"
         );
 
-    // Create node dictionary
+  allNodes.forEach(node => {
 
-    allNodes.forEach(node => {
+    const nodeId =
+        node.getAttribute("NodeId");
 
-        const nodeId =
-            node.getAttribute("NodeId");
+    const browseName =
+        node.getAttribute("BrowseName") || "";
 
-        const browseName =
-            node.getAttribute("BrowseName") || "";
+    const cleanName =
+        browseName.includes(":")
+            ? browseName.substring(
+                browseName.indexOf(":") + 1
+              )
+            : browseName;
 
-        const cleanName =
-            browseName.includes(":")
-                ? browseName.substring(
-                    browseName.indexOf(":") + 1
-                )
-                : browseName;
+    const metadata =
+    cleanName === "ChannelState"
+        ? testMetadata
+        : null;
 
-        const metadata =
-            cleanName === "ChannelState"
-                ? testMetadata
-                : null;
+nodeMap[nodeId] = {
 
-        nodeMap[nodeId] = {
+    name: cleanName,
 
-            name: cleanName,
+    browseName: browseName,
 
-            browseName: browseName,
+    metadata: metadata,
 
-            metadata: metadata,
+    category:
+        node.querySelector("Category")
+            ?.textContent || "",
 
-            category:
-                node.querySelector("Category")
-                    ?.textContent || "",
+    displayName:
+        node.querySelector("DisplayName")
+            ?.textContent || "",
 
-            displayName:
-                node.querySelector("DisplayName")
-                    ?.textContent || "",
+    description:
+        node.querySelector("Description")
+            ?.textContent || "",
 
-            description:
-                node.querySelector("Description")
-                    ?.textContent || "",
+    nodeId,
 
-            nodeId,
+    nodeClass:
+        node.tagName,
 
-            nodeClass:
-                node.tagName,
+    dataType:
+        node.getAttribute("DataType") || "",
 
-            dataType:
-                node.getAttribute("DataType") || "",
+    children: []
 
-            children: []
-
-        };
-
-    });
-
-    // Build relationships
-
+};
     allNodes.forEach(node => {
 
         const parentId =
@@ -157,8 +150,6 @@ function buildModel(xml) {
 
     });
 
-    // Find root node
-
     rootNode =
         Object.values(nodeMap).find(
             n =>
@@ -178,6 +169,29 @@ function buildModel(xml) {
     generateNodeList();
     generateCategoryTree();
     renderTree(rootNode);
+
+}
+
+function renderTree(root) {
+
+    const treePanel =
+        document.getElementById(
+            "treePanel"
+        );
+
+    treePanel.innerHTML = "";
+
+    const rootList =
+        document.createElement("ul");
+
+    renderNode(
+        root,
+        rootList
+    );
+
+    treePanel.appendChild(
+        rootList
+    );
 
 }
 
