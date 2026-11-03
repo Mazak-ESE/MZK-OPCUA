@@ -1,6 +1,6 @@
 let nodeMap = {};
 let rootNode = null;
-
+let testMetadata = null;
 // Load XML NodeSet
 
 fetch("UA_MachineTool_NodeSet2.xml")
