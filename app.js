@@ -98,7 +98,6 @@ nodeMap[nodeId] = {
     children: []
 
 };
-}); 
     allNodes.forEach(node => {
 
         const parentId =
