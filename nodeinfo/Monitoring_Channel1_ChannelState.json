@@ -1,7 +1,9 @@
 {
+  "namespaceIndex": 1,
+  "browseName": "ChannelState",
+  "umatiPath": "Monitoring/Channel1/ChannelState",
   "mazakApproved": false,
   "supportLevel": "Documented",
-  "umatiPath": "Monitoring/Channel1/ChannelState",
   "apiSdkStudioCall": "YmzApiDiagnostic.GetRunningSts, GetAlarms",
   "nativeMazakCall": "MazGetRunningSts, MazGetAlarm",
   "notes": "Fully supported."
