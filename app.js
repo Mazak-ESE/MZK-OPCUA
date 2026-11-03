@@ -47,12 +47,28 @@ function buildModel(xml) {
             "UAObject, UAVariable, UAObjectType, UAVariableType"
         );
 
-    allNodes.forEach(node => {
+  allNodes.forEach(node => {
 
-        const nodeId =
-            node.getAttribute("NodeId");
-            console.log(node.getAttribute("BrowseName"));
-        nodeMap[nodeId] = {
+    const nodeId =
+        node.getAttribute("NodeId");
+
+    const browseName =
+        node.getAttribute("BrowseName") || "";
+
+    const cleanName =
+        browseName.includes(":")
+            ? browseName.substring(
+                browseName.indexOf(":") + 1
+              )
+            : browseName;
+
+    const metadata =
+        cleanName === "ChannelState"
+            ? testMetadata
+            : null;
+
+    nodeMap[nodeId] = {
+
 
             name:
                 node.getAttribute("BrowseName") || "",
