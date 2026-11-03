@@ -3,28 +3,42 @@ let rootNode = null;
 let testMetadata = null;
 // Load XML NodeSet
 
-fetch("UA_MachineTool_NodeSet2.xml")
-    .then(response => response.text())
-    .then(xmlText => {
+fetch(
+    "nodeinfo/Monitoring_Channel1_ChannelState.json"
+)
+.then(response => response.json())
+.then(json => {
 
-        const parser = new DOMParser();
+    testMetadata = json;
 
-        const xml = parser.parseFromString(
-            xmlText,
-            "text/xml"
-        );
+    console.log(
+        "Metadata Loaded:",
+        testMetadata
+    );
 
-        buildModel(xml);
+    return fetch(
+        "UA_MachineTool_NodeSet2.xml"
+    );
 
-    })
-    .catch(error => {
+})
+.then(response => response.text())
+.then(xmlText => {
 
-        console.error(
-            "Error loading NodeSet:",
-            error
-        );
+    const parser = new DOMParser();
 
-    });
+    const xml = parser.parseFromString(
+        xmlText,
+        "text/xml"
+    );
+
+    buildModel(xml);
+
+})
+.catch(error => {
+
+    console.error(error);
+
+});
 
 function buildModel(xml) {
 
