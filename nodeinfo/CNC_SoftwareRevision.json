@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "SoftwareIdentification/CNC/SoftwareRevision",
+  "apiSdkStudioCall": "ymzAPICore.Connect",
+  "nativeMazakCall": "MazGetNCVersionInfo",
+  "notes": "Uses NC Main-A version."
+}

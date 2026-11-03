@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "Monitoring/Stacklight/<Lamp>/SignalColor",
+  "apiSdkStudioCall": "YmzApiDiagnostic.GetRunningSts, GetAlarms, GetMachineRunMode",
+  "nativeMazakCall": "MazGetRunningSts, MazGetAlarm, MazGetRunMode",
+  "notes": "Derived from machine-state rules."
+}

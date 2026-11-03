@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "Monitoring/Channel1/ChannelMode",
+  "apiSdkStudioCall": "YmzApiDiagnostic.GetMachineRunMode",
+  "nativeMazakCall": "MazGetRunMode",
+  "notes": "Partial support. Handwheel mode not distinguished from JogManual."
+}

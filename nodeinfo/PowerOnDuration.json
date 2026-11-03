@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "Monitoring/MachineTool/PowerOnDuration",
+  "apiSdkStudioCall": "YmzApiDiagnostic.GetRunningInfo",
+  "nativeMazakCall": "MazGetRunningInfo",
+  "notes": "Published at replacement node OperationCounters/PowerOnDuration."
+}

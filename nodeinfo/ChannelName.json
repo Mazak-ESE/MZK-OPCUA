@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "Monitoring/Channel1/Name",
+  "apiSdkStudioCall": "",
+  "nativeMazakCall": "",
+  "notes": "Constant value Channel 1. Multi-head support not implemented."
+}

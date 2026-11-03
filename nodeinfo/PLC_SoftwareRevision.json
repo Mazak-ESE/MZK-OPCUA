@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "SoftwareIdentification/PLC/SoftwareRevision",
+  "apiSdkStudioCall": "ymzAPICore.Connect",
+  "nativeMazakCall": "MazGetNCVersionInfo",
+  "notes": "Uses ladder version."
+}

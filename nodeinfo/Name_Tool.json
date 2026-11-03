@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Planned",
+  "umatiPath": "Equipment/Tools/<Tool>/Name",
+  "apiSdkStudioCall": "ymzAPIModToolTransfer.GetToolData",
+  "nativeMazakCall": "MazGetToolData",
+  "notes": "Tool list not currently published."
+}

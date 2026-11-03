@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "Production/ActiveProgram/State/Id",
+  "apiSdkStudioCall": "YmzApiDiagnostic.GetRunningSts, GetAlarms, ymzAPIModProgramTransfer.GetMainProgram",
+  "nativeMazakCall": "MazGetRunningSts, MazGetAlarm, MazGetMainPro",
+  "notes": "Cannot distinguish M30 completion from operator reset."
+}

@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Planned",
+  "umatiPath": "Equipment/Tools/<Tool>/Locked",
+  "apiSdkStudioCall": "ymzAPIModToolTransfer.GetToolData",
+  "nativeMazakCall": "MazGetToolData",
+  "notes": "Tool lock status not currently published."
+}

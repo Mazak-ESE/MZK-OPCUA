@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Planned",
+  "umatiPath": "Equipment/Tools/<Tool>/ControlIdentifierInterpretation",
+  "apiSdkStudioCall": "YmzApiModParameterTransfer.ReadRangedParameters",
+  "nativeMazakCall": "GetRangedParam",
+  "notes": "Tool list not currently published. Sister-tool handling still under review."
+}

@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Planned",
+  "umatiPath": "Equipment/Tools/<Tool>/ControlIdentifier1",
+  "apiSdkStudioCall": "ymzAPIModToolTransfer.GetToolRepository, GetToolData",
+  "nativeMazakCall": "MazGetToolDataNum, GetAllToolData, MazGetToolData",
+  "notes": "Not currently implemented. Planned under OPC UA Tools."
+}

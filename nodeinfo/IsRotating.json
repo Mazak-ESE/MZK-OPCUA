@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "Monitoring/Spindle1/IsRotating",
+  "apiSdkStudioCall": "YmzApiDiagnostic.GetCurrentSpindleRev",
+  "nativeMazakCall": "MazGetCurrentSpindleRev",
+  "notes": "Uses actual spindle speed. Fallback to GetRunningSts when unavailable."
+}

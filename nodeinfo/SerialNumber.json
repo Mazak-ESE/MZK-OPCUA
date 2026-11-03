@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "Identification/SerialNumber",
+  "apiSdkStudioCall": "ymzAPICore.Connect",
+  "nativeMazakCall": "MazGetMachineSerialNum",
+  "notes": "Retrieved from MazGetMachineSerialNum."
+}

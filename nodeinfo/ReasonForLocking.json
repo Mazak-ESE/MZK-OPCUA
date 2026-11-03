@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Planned",
+  "umatiPath": "Equipment/Tools/<Tool>/Locked/ReasonForLocking",
+  "apiSdkStudioCall": "ymzAPIModToolTransfer.GetToolData",
+  "nativeMazakCall": "MazGetToolData",
+  "notes": "Not currently implemented. Planned ToolLife and ToolBreak support."
+}

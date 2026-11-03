@@ -1,0 +1,8 @@
+{
+  "mazakApproved": false,
+  "supportLevel": "Documented",
+  "umatiPath": "SoftwareIdentification/HMI/SoftwareRevision",
+  "apiSdkStudioCall": "ymzAPICore.Connect",
+  "nativeMazakCall": "MazGetNCVersionInfo",
+  "notes": "Published as ControllerModel-MainA version."
+}
