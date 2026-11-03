@@ -63,44 +63,41 @@ function buildModel(xml) {
             : browseName;
 
     const metadata =
-        cleanName === "ChannelState"
-            ? testMetadata
-            : null;
+    cleanName === "ChannelState"
+        ? testMetadata
+        : null;
 
-    nodeMap[nodeId] = {
+nodeMap[nodeId] = {
 
+    name: cleanName,
 
-            name:
-                node.getAttribute("BrowseName") || "",
+    browseName: browseName,
 
-            browseName:
-                node.getAttribute("BrowseName") || "",
+    metadata: metadata,
 
-            category:
-                node.querySelector("Category")
-                    ?.textContent || "",
+    category:
+        node.querySelector("Category")
+            ?.textContent || "",
 
-            displayName:
-                node.querySelector("DisplayName")
-                    ?.textContent || "",
+    displayName:
+        node.querySelector("DisplayName")
+            ?.textContent || "",
 
-            description:
-                node.querySelector("Description")
-                    ?.textContent || "",
+    description:
+        node.querySelector("Description")
+            ?.textContent || "",
 
-            nodeId,
+    nodeId,
 
-            nodeClass:
-                node.tagName,
+    nodeClass:
+        node.tagName,
 
-            dataType:
-                node.getAttribute("DataType") || "",
+    dataType:
+        node.getAttribute("DataType") || "",
 
-            children: []
+    children: []
 
-        };
-
-    });
+};
 
     allNodes.forEach(node => {
 
