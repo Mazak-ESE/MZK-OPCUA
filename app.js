@@ -1,44 +1,30 @@
 let nodeMap = {};
 let rootNode = null;
-let testMetadata = null;
+
 // Load XML NodeSet
 
-fetch(
-    "nodeinfo/Monitoring_Channel1_ChannelState.json"
-)
-.then(response => response.json())
-.then(json => {
+fetch("UA_MachineTool_NodeSet2.xml")
+    .then(response => response.text())
+    .then(xmlText => {
 
-    testMetadata = json;
+        const parser = new DOMParser();
 
-    console.log(
-        "Metadata Loaded:",
-        testMetadata
-    );
+        const xml = parser.parseFromString(
+            xmlText,
+            "text/xml"
+        );
 
-    return fetch(
-        "UA_MachineTool_NodeSet2.xml"
-    );
+        buildModel(xml);
 
-})
-.then(response => response.text())
-.then(xmlText => {
+    })
+    .catch(error => {
 
-    const parser = new DOMParser();
+        console.error(
+            "Error loading NodeSet:",
+            error
+        );
 
-    const xml = parser.parseFromString(
-        xmlText,
-        "text/xml"
-    );
-
-    buildModel(xml);
-
-})
-.catch(error => {
-
-    console.error(error);
-
-});
+    });
 
 function buildModel(xml) {
 
@@ -47,57 +33,44 @@ function buildModel(xml) {
             "UAObject, UAVariable, UAObjectType, UAVariableType"
         );
 
-  allNodes.forEach(node => {
+    allNodes.forEach(node => {
 
-    const nodeId =
-        node.getAttribute("NodeId");
+        const nodeId =
+            node.getAttribute("NodeId");
 
-    const browseName =
-        node.getAttribute("BrowseName") || "";
+        nodeMap[nodeId] = {
 
-    const cleanName =
-        browseName.includes(":")
-            ? browseName.substring(
-                browseName.indexOf(":") + 1
-              )
-            : browseName;
+            name:
+                node.getAttribute("BrowseName") || "",
 
-    const metadata =
-    cleanName === "ChannelState"
-        ? testMetadata
-        : null;
+            browseName:
+                node.getAttribute("BrowseName") || "",
 
-nodeMap[nodeId] = {
+            category:
+                node.querySelector("Category")
+                    ?.textContent || "",
 
-    name: cleanName,
+            displayName:
+                node.querySelector("DisplayName")
+                    ?.textContent || "",
 
-    browseName: browseName,
+            description:
+                node.querySelector("Description")
+                    ?.textContent || "",
 
-    metadata: metadata,
+            nodeId,
 
-    category:
-        node.querySelector("Category")
-            ?.textContent || "",
+            nodeClass:
+                node.tagName,
 
-    displayName:
-        node.querySelector("DisplayName")
-            ?.textContent || "",
+            dataType:
+                node.getAttribute("DataType") || "",
 
-    description:
-        node.querySelector("Description")
-            ?.textContent || "",
+            children: []
 
-    nodeId,
+        };
 
-    nodeClass:
-        node.tagName,
-
-    dataType:
-        node.getAttribute("DataType") || "",
-
-    children: []
-
-};
+    });
 
     allNodes.forEach(node => {
 
