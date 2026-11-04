@@ -287,7 +287,7 @@
   </UAVariable>
   <UADataType NodeId="ns=1;i=64" BrowseName="1:ChannelState">
     <DisplayName>ChannelState</DisplayName>
-    <Category>MachineTool Monitoring Basic – Channels</Category>
+    <Category>MachineTool Monitoring Basic X Channels</Category>
     <Documentation>https://reference.opcfoundation.org/MachineTool/v102/docs/12.1</Documentation>
     <References>
       <Reference ReferenceType="HasProperty">ns=1;i=266</Reference>
